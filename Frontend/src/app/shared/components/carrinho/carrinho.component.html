@@ -1,0 +1,66 @@
+<button *ngIf="!carrinhoAberto" class="btn-float" (click)="toggleCarrinho()">
+  🛒 Carrinho <strong>{{ (carrinho$ | async)?.length || 0 }}</strong>
+</button>
+
+<div *ngIf="compraSucesso" class="alert alert-success mt-2" role="alert">
+  Compra finalizada com sucesso! você pode verificar suas compras em Usuario/Compras
+</div>
+
+<div *ngIf="errorMessage" [innerHTML]="errorMessage" class="alert alert-danger text-center">
+  {{ errorMessage }}
+</div>
+
+<div class="carrinho-panel" [class.aberto]="carrinhoAberto">
+
+  <button class="btn-close-cart" (click)="toggleCarrinho()">✕</button>
+
+  <h3 class="titulo-carrinho">Seu Carrinho</h3>
+
+  <ng-container *ngIf="(carrinho$ | async) as carrinho">
+
+    <div class="carrinho-vazio" *ngIf="carrinho.length === 0">
+      <p>Seu carrinho está vazio.</p>
+    </div>
+
+    <div class="lista-itens" *ngIf="carrinho.length > 0">
+
+      <div *ngFor="let item of carrinho" class="item-card">
+
+        <div class="linha-superior">
+          <div class="nome">{{ item.produto.nome }}</div>
+          <button class="remover-btn" (click)="removerDoCarrinho(item.produto.id)">×</button>
+        </div>
+
+        <div class="linha-meio">
+          <div class="preco">R$ {{ item.produto.valor | number:'1.2-2' }}</div>
+
+          <div class="quantidade-box">
+            <input type="number" min="1" [max]="item.produto.quantidadeEstoque" [value]="item.quantidade"
+              (change)="atualizarQuantidade(item, $any($event.target).value)">
+          </div>
+        </div>
+
+        <div class="linha-inferior">
+          Subtotal:
+          <strong>R$ {{ (item.quantidade * item.produto.valor) | number:'1.2-2' }}</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="linha-total">
+      Total:
+      <span class="valor-total">
+        R$ {{ (totalCarrinho$ | async)?.toFixed(2) }}
+      </span>
+    </div>
+
+    <button class="btn btn-success w-100 mt-3" (click)="finalizarCompra()"
+      [disabled]="(carrinho$ | async)?.length === 0">
+      Finalizar Compra
+    </button>
+
+  </ng-container>
+
+</div>

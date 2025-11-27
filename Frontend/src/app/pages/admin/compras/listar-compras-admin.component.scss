@@ -1,0 +1,18 @@
+.card-header {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.list-group-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+}
+
+.list-group-item strong {
+  color: #0d6efd;
+}
+
+.card {
+  border-radius: 12px;
+}

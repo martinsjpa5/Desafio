@@ -1,0 +1,160 @@
+.btn-float {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  background: #0d6efd;
+  color: white;
+  padding: 14px 20px;
+  border-radius: 50px;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  cursor: pointer;
+  z-index: 9999;
+  transition: 0.25s ease;
+
+  &:hover {
+    background: #0a58ca;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.28);
+  }
+}
+
+.carrinho-panel {
+  position: fixed;
+  top: 0;
+  right: -420px;
+  width: 380px;
+  height: 100vh;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(8px);
+  box-shadow: -8px 0 25px rgba(0,0,0,0.18);
+  padding: 30px 25px;
+  transition: right 0.32s ease;
+  z-index: 9998;
+  overflow-y: auto;
+
+  &.aberto {
+    right: 0;
+  }
+}
+
+.btn-close-cart {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  font-size: 26px;
+  cursor: pointer;
+  color: #444;
+  transition: 0.2s;
+
+  &:hover {
+    color: #000;
+    transform: scale(1.1);
+  }
+}
+
+.titulo-carrinho {
+  margin-top: 10px;
+  font-weight: 600;
+  font-size: 22px;
+  color: #222;
+}
+
+
+.carrinho-vazio {
+  text-align: center;
+  padding: 40px 0;
+  opacity: 0.75;
+}
+
+
+.lista-itens {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+
+.item-card {
+  background: white;
+  border-radius: 10px;
+  padding: 14px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  border: 1px solid #eee;
+  transition: 0.2s;
+
+  &:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+  }
+}
+
+.linha-superior {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nome {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.remover-btn {
+  border: none;
+  background: transparent;
+  font-size: 22px;
+  color: #888;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    color: #d00;
+    transform: scale(1.2);
+  }
+}
+
+.linha-meio {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.preco {
+  font-weight: 500;
+  color: #333;
+}
+
+.quantidade-box input {
+  width: 60px;
+  padding: 5px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.linha-inferior {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #444;
+}
+
+
+.linha-total {
+  margin-top: 28px;
+  font-size: 20px;
+  font-weight: 500;
+  text-align: right;
+  padding-top: 12px;
+  border-top: 1px solid #ddd;
+
+  .valor-total {
+    font-weight: 700;
+    color: #0d6efd;
+    margin-left: 6px;
+  }
+}

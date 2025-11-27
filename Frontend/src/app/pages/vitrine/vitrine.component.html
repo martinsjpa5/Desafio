@@ -1,0 +1,32 @@
+<div class="container py-5">
+  <h2 class="text-center mb-4">Vitrine</h2>
+
+  <div *ngIf="errorMessage" [innerHTML]="errorMessage" class="alert alert-danger text-center">
+    {{ errorMessage }}
+  </div>
+
+  <div class="row">
+    <div class="col-md-4 mb-4" *ngFor="let p of produtos">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">{{ p.nome }}</h5>
+          <p class="card-text">
+            <strong>Valor:</strong> R$ {{ p.valor | number:'1.2-2' }}
+          </p>
+          <p class="card-text">
+            <strong>Estoque:</strong> {{ p.quantidadeEstoque }}
+          </p>
+
+          <button class="btn btn-primary w-100"
+                  [disabled]="p.quantidadeEstoque === 0"
+                  (click)="adicionarAoCarrinho(p)">
+            {{ p.quantidadeEstoque > 0 ? 'Adicionar ao Carrinho' : 'Sem estoque' }}
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-carrinho></app-carrinho>

@@ -1,0 +1,70 @@
+<nav class="navbar navbar-expand-lg topbar px-4">
+  <a class="navbar-brand fw-bold text-light" routerLink="/vitrine">Vitrine</a>
+
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#menuTopBar"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="menuTopBar">
+    <ul class="navbar-nav me-auto">
+
+      <li class="nav-item dropdown" *ngIf="role === 'Gerente'">
+        <a
+          class="nav-link dropdown-toggle text-light"
+          role="button"
+          data-bs-toggle="dropdown"
+        >
+          Admin
+        </a>
+
+        <ul class="dropdown-menu">
+          <li>
+            <a class="dropdown-item" routerLink="/admin/produtos">Produtos</a>
+          </li>
+          <li>
+            <a class="dropdown-item" routerLink="/admin/compras">Compras</a>
+          </li>
+          <li>
+            <a class="dropdown-item" routerLink="/admin/relatorio">Relatorio</a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle text-light"
+          role="button"
+          data-bs-toggle="dropdown"
+        >
+          Usuario
+        </a>
+
+        <ul class="dropdown-menu">
+          <li>
+            <a class="dropdown-item" routerLink="/usuario/compras">Compras</a>
+          </li>
+        </ul>
+      </li>
+
+    </ul>
+
+    <div class="d-flex align-items-center gap-3 text-light user-area">
+      <span class="user-email" *ngIf="emailUsuario">
+        {{ emailUsuario }}
+      </span>
+
+      <button class="btn-logout" (click)="logout()">
+        Sair
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="content p-3">
+  <router-outlet></router-outlet>
+</div>

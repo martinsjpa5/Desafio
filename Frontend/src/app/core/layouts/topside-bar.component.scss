@@ -1,0 +1,69 @@
+.topbar {
+  background: #1a1d20;
+  border-bottom: 2px solid #343a40;
+
+  .navbar-brand {
+    font-size: 1.4rem;
+    letter-spacing: 0.5px;
+  }
+
+  .nav-link {
+    font-size: 1rem;
+    transition: 0.2s;
+
+    &:hover {
+      color: #0d6efd !important;
+    }
+  }
+
+  .dropdown-menu {
+    background: #24282c;
+    border: 1px solid #3a3f44;
+
+    .dropdown-item {
+      color: #e9ecef;
+
+      &:hover {
+        background: #0d6efd;
+        color: #fff;
+      }
+    }
+  }
+
+  .user-area {
+    .user-email {
+      font-weight: 500;
+      opacity: 0.9;
+    }
+  }
+}
+
+.content {
+  background: #f8f9fa;
+  min-height: calc(100vh - 60px);
+}
+
+
+.btn-logout {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #fff;
+
+  padding: 6px 18px;
+  border-radius: 6px;
+
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  backdrop-filter: blur(4px);
+  transition: all 0.25s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.22);
+    border-color: #fff;
+  }
+
+  &:active {
+    transform: scale(0.96);
+  }
+}
