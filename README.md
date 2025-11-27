@@ -1,4 +1,5 @@
 Tutorial de Utilização do Sistema
+Obs: Existe uma Documentação técnica na Pasta Docs
 1. Inicializando o Projeto
 
 Entre na pasta raiz do projeto, onde está localizado o docker-compose.yml.
