@@ -50,7 +50,6 @@ A solução foi organizada para permitir **manutenção, escalabilidade e segreg
 ### Infraestrutura
 
 - **Docker / Docker Compose**
-- **Redis / SQL / RabbitMQ** 
 
 ---
 
