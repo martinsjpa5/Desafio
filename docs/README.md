@@ -23,7 +23,7 @@ A solução foi organizada para permitir **manutenção, escalabilidade e segreg
 
 ### Estrutura do Projeto
 
-- **Domain:** Entidades, regras de negócio e agregados  
+- **Domain:** Entidades e regras de negócio  
 - **ApplicationService:** Serviços de aplicação, orquestração de operações e regras de negócio  
 - **Infra:** Configurações de infraestrutura, acesso a dados (EF e Dapper), mensageria e cache Redis  
 - **WebAPI:** Endpoints REST, documentação Swagger, autorização e autenticação  
