@@ -8,6 +8,7 @@ O sistema é uma aplicação **full-stack**, composta por múltiplos serviços, 
 - Geração de relatórios assíncronos
 - Cache de carrinho de compras de em Redis
 - Mensageria via RabbitMQ e Workers Consumidores
+- Autorização
 
 A solução foi organizada para permitir **manutenção, escalabilidade e segregação de responsabilidades**, contemplando as camadas:
 
@@ -44,7 +45,7 @@ A solução foi organizada para permitir **manutenção, escalabilidade e segreg
 
 ### Frontend
 
-- **Angular 17**  
+- **Angular 19**  
 
 ### Infraestrutura
 
