@@ -3,11 +3,12 @@ import { ReactiveFormsModule, Validators, FormGroup, FormBuilder, AbstractContro
 import { AuthService } from '../../../core/services/auth.service';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { PoButtonModule, PoFieldModule } from '@po-ui/ng-components';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, PoFieldModule, PoButtonModule],
   templateUrl: './register.component.html'
 })
 export class RegisterComponent {

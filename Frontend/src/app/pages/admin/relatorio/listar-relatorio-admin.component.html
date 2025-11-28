@@ -1,52 +1,31 @@
 <div class="container mt-4">
   <h2 class="mb-3">Relatórios de Produtos</h2>
+  <div class="card shadow-sm p-4 rounded-3 border-0">
+    <h5 class="mb-3 fw-semibold text-primary">Gerar Relatório</h5>
 
-  <div class="card p-3 mb-4 shadow-sm">
-    <div class="row g-2 align-items-end">
-      <div class="col-md-4">
-        <label for="dataInicial" class="form-label">Data Inicial</label>
-        <input type="date" id="dataInicial" class="form-control" [(ngModel)]="dataInicial">
+    <div class="row gy-3 align-items-end">
+
+      <div class="col-md-6">
+        <label class="form-label fw-semibold">Intervalo de Data</label>
+        <po-datepicker-range [(ngModel)]="intervaloData" name="datepickerRange" >
+        </po-datepicker-range>
       </div>
-      <div class="col-md-4">
-        <label for="dataFinal" class="form-label">Data Final</label>
-        <input type="date" id="dataFinal" class="form-control" [(ngModel)]="dataFinal">
+
+      <div class="col-md-6 mb-2">
+        <po-button p-label="Solicitar Relatório" (p-click)="SolicitarRelatorio()"> </po-button>
       </div>
-      <div class="col-md-4">
-        <button class="btn btn-primary w-100" (click)="SolicitarRelatorio()" [disabled]="carregando">
-          {{ carregando ? 'Processando...' : 'Solicitar Relatório' }}
-        </button>
-      </div>
+
     </div>
-    <div class="mt-2 text-danger">{{ errorMessage }}</div>
+
+    <div *ngIf="errorMessage" class="mt-3 alert alert-danger py-2">
+      {{ errorMessage }}
+    </div>
   </div>
+
 
   <div class="card p-3 shadow-sm">
     <h5 class="mb-3">Lista de Relatórios</h5>
-    <div *ngIf="carregando" class="text-center my-3">
-      <div class="spinner-border text-primary" role="status"></div>
-    </div>
+    <po-table [p-items]="relatorios"> </po-table>
 
-    <table class="table table-hover table-striped" *ngIf="relatorios.length > 0">
-      <thead class="table-dark">
-        <tr>
-          <th>Nome Produto</th>
-          <th>Estoque</th>
-          <th>Vendidos</th>
-          <th>Valor Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let r of relatorios">
-          <td>{{ r.nomeProduto }}</td>
-          <td>{{ r.estoque }}</td>
-          <td>{{ r.vendidos }}</td>
-          <td>{{ r.valorTotal | currency:'BRL' }}</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div *ngIf="relatorios.length === 0" class="text-center text-muted py-3">
-      Nenhum relatório encontrado.
-    </div>
   </div>
 </div>

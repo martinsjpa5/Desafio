@@ -10,42 +10,38 @@
     </div>
 
     <form [formGroup]="form" (ngSubmit)="registrar()">
-
       <div class="mb-3">
-        <label for="email" class="form-label">E-mail</label>
-        <input type="email" id="email" class="form-control" placeholder="seuemail@exemplo.com" formControlName="email"
-          [ngClass]="{'is-invalid': form.get('email')?.touched && form.get('email')?.invalid}">
-        <div class="invalid-feedback" *ngIf="form.get('email')?.errors">
+        <po-email name="email" formControlName="email" p-label="Email"></po-email>
+
+        <small class="text-danger ms-1" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
           <span *ngIf="form.get('email')?.errors?.['required']">O campo Email é obrigatório.</span>
           <span *ngIf="form.get('email')?.errors?.['email']">Formato de email inválido.</span>
-        </div>
+        </small>
       </div>
 
       <div class="mb-3">
-        <label for="senha" class="form-label">Senha</label>
-        <input type="password" id="senha" class="form-control" placeholder="••••••••" formControlName="senha"
-          [ngClass]="{'is-invalid': form.get('senha')?.touched && form.get('senha')?.invalid}">
-        <div class="invalid-feedback" *ngIf="form.get('senha')?.errors">
+        <po-password name="password" formControlName="senha" p-label="Senha"></po-password>
+
+        <small class="text-danger ms-1" *ngIf="form.get('senha')?.touched && form.get('senha')?.invalid">
           <span *ngIf="form.get('senha')?.errors?.['required']">A senha é obrigatória.</span>
           <span *ngIf="form.get('senha')?.errors?.['minlength']">A senha deve ter no mínimo 6 caracteres.</span>
           <span *ngIf="form.get('senha')?.errors?.['maxlength']">A senha deve ter no máximo 100 caracteres.</span>
-        </div>
+        </small>
       </div>
 
       <div class="mb-3">
-        <label for="confirmarSenha" class="form-label">Confirmar Senha</label>
-        <input type="password" id="confirmarSenha" class="form-control" placeholder="••••••••"
-          formControlName="confirmarSenha"
-          [ngClass]="{'is-invalid': form.get('confirmarSenha')?.touched && (form.get('confirmarSenha')?.invalid || form.errors?.['senhasDiferentes'])}">
-        <div class="invalid-feedback">
+        <po-password name="password" formControlName="confirmarSenha" p-label="Confirmar Senha"></po-password>
+
+        <small class="text-danger ms-1"
+          *ngIf="form.get('confirmarSenha')?.touched && (form.get('confirmarSenha')?.invalid || form.errors?.['senhasDiferentes'])">
           <span *ngIf="form.get('confirmarSenha')?.errors?.['required']">A confirmação de senha é obrigatória.</span>
           <span *ngIf="form.errors?.['senhasDiferentes']">As senhas não coincidem.</span>
-        </div>
+        </small>
       </div>
 
-      <button class="btn btn-success w-100 mb-3" type="submit" [disabled]="loading">
-        <span>Registrar</span>
-      </button>
+      <div class="d-flex justify-content-center my-3">
+        <po-button p-label="Registrar" (p-click)="registrar()"> </po-button>
+      </div>
 
       <div class="text-center">
         <a routerLink="/login">Já possui conta? Entrar</a>

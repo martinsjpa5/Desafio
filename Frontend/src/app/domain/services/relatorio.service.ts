@@ -14,7 +14,7 @@ export class RelatorioService {
 
   constructor(private http: HttpClient) {}
 
-  async Solicitar(dataInicial: string, dataFinal: string): Promise<ApiResponse> {
+  async Solicitar(dataInicial: Date, dataFinal: Date): Promise<ApiResponse> {
     return await firstValueFrom(
       this.http.post<ApiResponse>(this.apiUrl, {dataInicial: dataInicial, dataFinal: dataFinal})
     );

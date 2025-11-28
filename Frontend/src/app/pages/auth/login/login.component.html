@@ -9,31 +9,36 @@
       {{ errorMessage }}
     </div>
 
-    <form [formGroup]="form" (ngSubmit)="login()">
+    <form [formGroup]="form">
 
       <div class="mb-3">
-        <label for="email" class="form-label">E-mail</label>
-        <input type="email" id="email" class="form-control" placeholder="seuemail@exemplo.com" formControlName="email"
-          [ngClass]="{'is-invalid': form.get('email')?.touched && form.get('email')?.invalid}">
-        <div class="invalid-feedback" *ngIf="form.get('email')?.errors">
-          <span *ngIf="form.get('email')?.errors?.['required']">O campo Email é obrigatório.</span>
-          <span *ngIf="form.get('email')?.errors?.['email']">Formato de email inválido.</span>
-        </div>
+        <po-email name="email" formControlName="email" p-label="Email">
+        </po-email>
+
+        <small class="text-danger ms-1" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+          <span *ngIf="form.get('email')?.errors?.['required']">
+            O campo Email é obrigatório.
+          </span>
+          <span *ngIf="form.get('email')?.errors?.['email']">
+            Formato de email inválido.
+          </span>
+        </small>
       </div>
 
       <div class="mb-3">
-        <label for="senha" class="form-label">Senha</label>
-        <input type="password" id="senha" class="form-control" placeholder="••••••••" formControlName="senha"
-          [ngClass]="{'is-invalid': form.get('senha')?.touched && form.get('senha')?.invalid}">
-        <div class="invalid-feedback" *ngIf="form.get('senha')?.errors">
-          <span *ngIf="form.get('senha')?.errors?.['required']">O campo Senha é obrigatório.</span>
-        </div>
+        <po-password name="password" formControlName="senha" p-label="Senha">
+        </po-password>
+
+        <small class="text-danger ms-1" *ngIf="form.get('senha')?.touched && form.get('senha')?.invalid">
+          <span *ngIf="form.get('senha')?.errors?.['required']">
+            O campo Senha é obrigatório.
+          </span>
+        </small>
       </div>
 
-
-      <button class="btn btn-primary w-100 mb-3" type="submit">
-        <span >Entrar</span>
-      </button>
+      <div class="d-flex justify-content-center my-3">
+        <po-button p-label="Entrar" (p-click)="login()"> </po-button>
+      </div>
 
       <div class="text-center">
         <a routerLink="/register">Criar conta</a>

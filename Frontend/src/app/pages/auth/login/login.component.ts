@@ -4,11 +4,12 @@ import { AuthService } from '../../../core/services/auth.service';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { LoadingService } from '../../../core/services/loading.service';
+import { PoButtonModule, PoFieldModule } from '@po-ui/ng-components';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, PoFieldModule, PoButtonModule  ],
   templateUrl: './login.component.html'
 })
 export class LoginComponent {
@@ -30,6 +31,7 @@ export class LoginComponent {
   }
 
   async login() {
+    console.log(this.form.invalid);
     if (this.form.invalid){
       this.form.markAllAsTouched();
       return;

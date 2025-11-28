@@ -103,7 +103,6 @@ export class ListarProdutosAdminComponent implements OnInit {
         this.errorMessage = error.error.erros.join('<br>');
       }
       else {
-
         this.errorMessage = 'Erro ao excluir produto.';
       }
     }
