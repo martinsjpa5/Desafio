@@ -13,7 +13,6 @@ namespace Infraestrutura.EF.Context
 
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Item> Itens { get; set; }
-        public DbSet<Avaliacao> Avaliacaos { get; set; }
         public DbSet<Compra> Compras { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

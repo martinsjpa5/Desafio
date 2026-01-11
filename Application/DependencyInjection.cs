@@ -20,7 +20,6 @@ namespace Application
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IProdutoService, ProdutoService>();
             services.AddScoped<ICompraService, CompraService>();
-            services.AddScoped<IAvaliacaoService, AvaliacaoService>();
             services.AddScoped<IRelatorioService, RelatorioService>();
             services.AddScoped<ICarrinhoService, CarrinhoService>();
             services.AddSingleton<IRelatorioQueue, RelatorioQueue>();

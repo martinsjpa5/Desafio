@@ -34,7 +34,7 @@ namespace Application.Services
             if (relatorio == null)
                 return CommonGenericResponse<IEnumerable<RelatorioResponse>>.SucessoBuilder([]);
 
-            List<RelatorioResponse> produtos = relatorio.Produtos.Select(relatorio => new RelatorioResponse { Estoque = relatorio.Estoque, NomeProduto = relatorio.NomeProduto, ValorTotal = relatorio.ValorTotal, Vendidos = relatorio.Vendidos }).ToList();
+            List<RelatorioResponse> produtos = relatorio.Produtos.Select(relatorio => new RelatorioResponse { Estoque = relatorio.Estoque, NomeProduto = relatorio.NomeProduto, ValorTotal = relatorio.ValorTotal, Vendidos = relatorio.Vendidos, Canceladas = relatorio.Canceladas }).ToList();
 
             return CommonGenericResponse<IEnumerable<RelatorioResponse>>.SucessoBuilder(produtos);
 

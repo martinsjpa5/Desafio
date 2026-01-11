@@ -43,7 +43,6 @@ namespace Application.Services
                 return CommonResponse.ErroBuilder(erros);
             }
 
-            // adiciona role
             await _userManager.AddToRoleAsync(user, "Cliente");
 
             return CommonResponse.SucessoBuilder();

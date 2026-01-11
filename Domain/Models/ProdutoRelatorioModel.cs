@@ -7,6 +7,7 @@ namespace Domain.Models
         public int Estoque { get; set; }
 
         public int Vendidos { get; set; }
+        public int Canceladas { get; set; }
         public decimal ValorTotal { get; set; }
     }
 }

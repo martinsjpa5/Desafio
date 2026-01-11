@@ -18,32 +18,38 @@ namespace Infraestrutura.Dapper
         public async Task<RelatorioModel> ObterRelatorioPorProdutoAsync(DateTime dataInicial, DateTime dataFinal)
         {
             string query = @"
-        SELECT 
-            p.Nome AS NomeProduto,
-            p.QuantidadeEstoque AS Estoque,
-            ISNULL(SUM(iv.Quantidade), 0) AS Vendidos,
-            ISNULL(SUM(iv.Quantidade * iv.Valor), 0) AS ValorTotal
-        FROM Produtos p
-        LEFT JOIN Itens iv ON iv.ProdutoId = p.Id
-        LEFT JOIN Compras c ON c.Id = iv.CompraId 
-                           AND c.Cancelada = 0
-                           AND c.DataCriacao BETWEEN @DataInicial AND @DataFinal
-        GROUP BY 
-            p.Nome, p.QuantidadeEstoque
-        ORDER BY 
-            p.Nome";
-
-            DynamicParameters parameters = new();
+            SELECT 
+                p.Nome AS NomeProduto,
+                p.QuantidadeEstoque AS Estoque,
+            
+                COALESCE(SUM(CASE WHEN c.Cancelada = 0 THEN iv.Quantidade ELSE 0 END), 0) AS Vendidos,
+                COALESCE(SUM(CASE WHEN c.Cancelada = 1 THEN iv.Quantidade ELSE 0 END), 0) AS Canceladas,
+                COALESCE(SUM(CASE WHEN c.Cancelada = 0 THEN iv.Quantidade * iv.Valor ELSE 0 END), 0) AS ValorTotal
+            
+            FROM Produtos p
+            LEFT JOIN Itens iv 
+                ON iv.ProdutoId = p.Id
+            LEFT JOIN Compras c 
+                ON c.Id = iv.CompraId
+               AND c.DataCriacao >= @DataInicial
+               AND c.DataCriacao < DATEADD(DAY, 1, @DataFinal)
+            
+            GROUP BY 
+                p.Nome, p.QuantidadeEstoque
+            ORDER BY 
+                p.Nome;";
+            
+            var parameters = new DynamicParameters();
             parameters.Add("DataInicial", dataInicial, DbType.DateTime);
             parameters.Add("DataFinal", dataFinal, DbType.DateTime);
 
-            IEnumerable<ProdutoRelatorioModel> produtos = await _commonRepository.QueryAsync<ProdutoRelatorioModel>(query, parameters);
+            var produtos = await _commonRepository.QueryAsync<ProdutoRelatorioModel>(query, parameters);
 
-            return new RelatorioModel
-            {
-                Produtos = produtos
-            };
+            return new RelatorioModel { Produtos = produtos };
         }
+
+
+
 
     }
 }

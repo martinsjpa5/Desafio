@@ -1,6 +1,7 @@
 ﻿
 using System.Security.Claims;
 using Application.Interfaces;
+using Application.ViewModels;
 using Application.ViewModels.Requests;
 using Application.ViewModels.Response;
 using Domain.Entities;
@@ -75,7 +76,8 @@ namespace Application.Services
             await _commonRepository.AdicionarEntityAsync(compra);
             await _commonRepository.SalvarAlteracoesAsync();
 
-            await _carrinhoService.Adicionar([]);
+            List<Carrinho> auxLimparCarrinho = [];
+            await _carrinhoService.Adicionar(auxLimparCarrinho);
 
             return CommonResponse.SucessoBuilder();
         }

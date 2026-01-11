@@ -21,7 +21,7 @@ namespace Infraestrutura.Extensions
                 }
             }
 
-            string adminEmail = "admin@gmail.com";
+            string adminEmail = "admin@admin.com";
             string adminPassword = "Desafio2025!";
 
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
