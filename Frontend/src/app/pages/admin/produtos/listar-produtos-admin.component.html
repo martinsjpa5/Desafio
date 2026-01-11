@@ -1,86 +1,178 @@
-<div class="container my-4">
+<div class="container my-5 compras-container">
 
-  <h2 class="mb-4">Gerenciar Produtos</h2>
+  <!-- Header -->
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-4">
+    <div>
+      <h3 class="fw-bold mb-0">Gerenciar Produtos</h3>
+      <small class="text-muted">Crie, edite e exclua produtos do catálogo.</small>
+    </div>
 
-  <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
-    {{ errorMessage }}
+    <div class="d-flex gap-2">
+      <button class="btn btn-primary d-inline-flex align-items-center gap-2"
+              (click)="abrirModal(modalNovoProduto)">
+        <i class="bi bi-plus-lg"></i>
+        Novo Produto
+      </button>
+    </div>
   </div>
 
-  <div class="mb-3 text-end">
-    <button class="btn btn-primary" (click)="abrirModal(modalNovoProduto)">
-      <i class="bi bi-plus-lg"></i> Novo Produto
-    </button>
+  <!-- Alert -->
+  <div *ngIf="errorMessage" class="alert alert-danger d-flex align-items-center" role="alert">
+    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+    <div>{{ errorMessage }}</div>
   </div>
 
-  <div class="table-responsive">
-    <table class="table table-hover align-middle">
-      <thead class="table-dark">
-        <tr>
-          <th>ID</th>
-          <th>Nome</th>
-          <th>Estoque</th>
-          <th>Valor (R$)</th>
-          <th class="text-center">Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let produto of produtos">
-          <td>{{ produto.id }}</td>
-          <td>{{ produto.nome }}</td>
-          <td>{{ produto.quantidadeEstoque }}</td>
-          <td>{{ produto.valor | currency:'BRL':'symbol':'1.2-2' }}</td>
-          <td class="text-center">
-            <button class="btn btn-sm btn-warning me-2" (click)="abrirModal(modalNovoProduto, produto)">
-              <i class="bi bi-pencil"></i> Editar
-            </button>
-            <button class="btn btn-sm btn-danger" (click)="excluirProduto(produto)">
-              <i class="bi bi-trash"></i> Excluir
-            </button>
-          </td>
-        </tr>
-        <tr *ngIf="produtos.length === 0">
-          <td colspan="5" class="text-center text-muted">Nenhum produto encontrado.</td>
-        </tr>
-      </tbody>
-    </table>
+  <!-- Card (padrão moderno) -->
+  <div class="card compra-card border-0">
+
+    <!-- Header do Card (gradiente como nas compras) -->
+    <div class="card-header header-ativa d-flex justify-content-between align-items-center">
+      <div>
+        <div class="fw-semibold">Lista de produtos</div>
+        <div class="small opacity-75">Total: {{ produtos.length }} produto(s)</div>
+      </div>
+
+      <span class="badge bg-light text-dark">
+        Catálogo
+      </span>
+    </div>
+
+    <!-- Tabela -->
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0 produtos-table">
+        <thead class="table-light">
+          <tr>
+            <th style="width: 90px;">ID</th>
+            <th>Nome</th>
+            <th style="width: 160px;">Estoque</th>
+            <th style="width: 170px;">Valor</th>
+            <th class="text-end" style="width: 220px;">Ações</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let produto of produtos">
+            <td class="text-muted">#{{ produto.id }}</td>
+
+            <td>
+              <div class="fw-semibold">{{ produto.nome }}</div>
+            </td>
+
+            <td>
+              <span class="badge"
+                    [ngClass]="produto.quantidadeEstoque === 0 ? 'text-bg-danger' :
+                               produto.quantidadeEstoque <= 5 ? 'text-bg-warning' : 'text-bg-success'">
+                {{ produto.quantidadeEstoque }} un.
+              </span>
+            </td>
+
+            <td class="fw-semibold">
+              {{ produto.valor | currency:'BRL':'symbol':'1.2-2' }}
+            </td>
+
+            <td class="text-end">
+              <div class="btn-group" role="group" aria-label="Ações do produto">
+                <button class="btn btn-sm btn-outline-secondary"
+                        (click)="abrirModal(modalNovoProduto, produto)">
+                  <i class="bi bi-pencil me-1"></i>
+                  Editar
+                </button>
+
+                <button class="btn btn-sm btn-outline-danger"
+                        (click)="excluirProduto(produto)">
+                  <i class="bi bi-trash me-1"></i>
+                  Excluir
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          <tr *ngIf="produtos.length === 0">
+            <td colspan="5" class="text-center text-muted py-5">
+              <div class="mb-2">
+                <i class="bi bi-inbox fs-2"></i>
+              </div>
+              Nenhum produto encontrado.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Footer (discreto) -->
+    <div class="card-footer bg-white border-0 py-3 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+      <small class="text-muted">Total: {{ produtos.length }} produto(s)</small>
+    </div>
   </div>
 
+  <!-- Modal -->
   <ng-template #modalNovoProduto let-modal>
     <div class="modal-header">
-      <h5 class="modal-title">{{ modalTitle }}</h5>
+      <h5 class="modal-title fw-semibold">{{ modalTitle }}</h5>
       <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
     </div>
+
     <div class="modal-body">
       <form [formGroup]="produtoForm" (ngSubmit)="salvarProduto()">
 
         <div class="mb-3">
           <label for="nome" class="form-label">Nome</label>
-          <input type="text" id="nome" class="form-control" formControlName="nome" [ngClass]="{'is-invalid': produtoForm.get('nome')?.touched && produtoForm.get('nome')?.invalid}">
+          <input type="text"
+                 id="nome"
+                 class="form-control"
+                 formControlName="nome"
+                 [class.is-invalid]="produtoForm.get('nome')?.touched && produtoForm.get('nome')?.invalid"
+                 placeholder="Ex.: Teclado mecânico" />
           <div class="invalid-feedback">
             Nome é obrigatório e deve ter até 100 caracteres.
           </div>
         </div>
 
-        <div class="mb-3">
-          <label for="quantidadeEstoque" class="form-label">Quantidade em Estoque</label>
-          <input type="number" id="quantidadeEstoque" class="form-control" formControlName="quantidadeEstoque" [ngClass]="{'is-invalid': produtoForm.get('quantidadeEstoque')?.touched && produtoForm.get('quantidadeEstoque')?.invalid}">
-          <div class="invalid-feedback">
-            Quantidade deve ser 0 ou maior.
+        <div class="row g-3">
+          <div class="col-12 col-md-6">
+            <label for="quantidadeEstoque" class="form-label">Quantidade em Estoque</label>
+            <input type="number"
+                   id="quantidadeEstoque"
+                   class="form-control"
+                   formControlName="quantidadeEstoque"
+                   [class.is-invalid]="produtoForm.get('quantidadeEstoque')?.touched && produtoForm.get('quantidadeEstoque')?.invalid"
+                   placeholder="0" />
+            <div class="invalid-feedback">
+              Quantidade deve ser 0 ou maior.
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <label for="valor" class="form-label">Valor (R$)</label>
+            <div class="input-group">
+              <span class="input-group-text">R$</span>
+              <input type="number"
+                     step="0.01"
+                     id="valor"
+                     class="form-control"
+                     formControlName="valor"
+                     [class.is-invalid]="produtoForm.get('valor')?.touched && produtoForm.get('valor')?.invalid"
+                     placeholder="0,00" />
+              <div class="invalid-feedback">
+                Valor deve ser maior que 0.
+              </div>
+            </div>
+            <small class="text-muted">Use ponto para decimais (ex.: 10.50).</small>
           </div>
         </div>
 
-        <div class="mb-3">
-          <label for="valor" class="form-label">Valor (R$)</label>
-          <input type="number" step="0.01" id="valor" class="form-control" formControlName="valor" [ngClass]="{'is-invalid': produtoForm.get('valor')?.touched && produtoForm.get('valor')?.invalid}">
-          <div class="invalid-feedback">
-            Valor deve ser maior que 0.
-          </div>
-        </div>
+        <hr class="my-4">
 
-        <div class="text-end">
-          <button type="button" class="btn btn-secondary me-2" (click)="modal.dismiss()">Cancelar</button>
-          <button type="submit" class="btn btn-success" >
-            <i class="bi bi-check-lg"></i> Salvar
+        <div class="d-flex justify-content-end gap-2">
+          <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss()">
+            Cancelar
+          </button>
+
+          <button type="submit"
+                  class="btn btn-success d-inline-flex align-items-center gap-2"
+                  [disabled]="produtoForm.invalid">
+            <i class="bi bi-check-lg"></i>
+            Salvar
           </button>
         </div>
 

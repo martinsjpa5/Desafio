@@ -1,53 +1,49 @@
-<nav class="navbar navbar-expand-lg topbar px-4">
-  <a class="navbar-brand fw-bold text-light" routerLink="/vitrine">Vitrine</a>
+<nav class="navbar navbar-expand-lg topbar-app px-3 px-md-4 py-3">
+  <a class="navbar-brand fw-bold text-light d-flex align-items-center gap-2" routerLink="/vitrine">
+    <span class="brand-badge">V</span>
+    <span>Vitrine</span>
+  </a>
 
   <button
-    class="navbar-toggler"
+    class="navbar-toggler text-light border-0"
     type="button"
     data-bs-toggle="collapse"
     data-bs-target="#menuTopBar"
+    aria-controls="menuTopBar"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
   >
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="menuTopBar">
-    <ul class="navbar-nav me-auto">
+    <ul class="navbar-nav me-auto gap-lg-2">
 
       <li class="nav-item dropdown" *ngIf="role === 'Gerente'">
-        <a
-          class="nav-link dropdown-toggle text-light"
-          role="button"
-          data-bs-toggle="dropdown"
-        >
+        <a class="nav-link dropdown-toggle text-light nav-pill"
+           role="button"
+           data-bs-toggle="dropdown"
+           aria-expanded="false">
           Admin
         </a>
 
-        <ul class="dropdown-menu">
-          <li>
-            <a class="dropdown-item" routerLink="/admin/produtos">Produtos</a>
-          </li>
-          <li>
-            <a class="dropdown-item" routerLink="/admin/compras">Compras</a>
-          </li>
-          <li>
-            <a class="dropdown-item" routerLink="/admin/relatorio">Relatorio</a>
-          </li>
+        <ul class="dropdown-menu dropdown-menu-app">
+          <li><a class="dropdown-item" routerLink="/admin/produtos">Produtos</a></li>
+          <li><a class="dropdown-item" routerLink="/admin/compras">Compras</a></li>
+          <li><a class="dropdown-item" routerLink="/admin/relatorio">Relatório</a></li>
         </ul>
       </li>
 
       <li class="nav-item dropdown">
-        <a
-          class="nav-link dropdown-toggle text-light"
-          role="button"
-          data-bs-toggle="dropdown"
-        >
-          Usuario
+        <a class="nav-link dropdown-toggle text-light nav-pill"
+           role="button"
+           data-bs-toggle="dropdown"
+           aria-expanded="false">
+          Usuário
         </a>
 
-        <ul class="dropdown-menu">
-          <li>
-            <a class="dropdown-item" routerLink="/usuario/compras">Compras</a>
-          </li>
+        <ul class="dropdown-menu dropdown-menu-app">
+          <li><a class="dropdown-item" routerLink="/usuario/compras">Compras</a></li>
         </ul>
       </li>
 
@@ -58,13 +54,13 @@
         {{ emailUsuario }}
       </span>
 
-      <button class="btn-logout" (click)="logout()">
+      <button class="btn btn-light btn-sm btn-logout" (click)="logout()">
         Sair
       </button>
     </div>
   </div>
 </nav>
 
-<div class="content p-3">
+<div class="content p-3 p-md-4">
   <router-outlet></router-outlet>
 </div>

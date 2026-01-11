@@ -8,7 +8,8 @@ import { LoadingService } from '../../../core/services/loading.service';
     standalone: true,
     imports: [CommonModule],
     selector: 'app-listar-compras-usuario',
-    templateUrl: './listar-compras-usuario.component.html'
+    templateUrl: './listar-compras-usuario.component.html',
+    styleUrls: ['./listar-compras-usuario.component.scss']
 })
 export class ListarComprasUsuarioComponent implements OnInit {
     compras: CompraListarResponse[] = [];

@@ -32,8 +32,7 @@
               }
             ],
             "styles": [
-              "src/styles.scss",
-              "node_modules/@po-ui/style/css/po-theme-default.min.css"
+              "src/styles.scss"
             ],
             "scripts": [
               "node_modules/@popperjs/core/dist/umd/popper.min.js",
@@ -108,5 +107,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "c5aa55a9-514b-49a2-9848-6c715dcbaf33"
   }
 }

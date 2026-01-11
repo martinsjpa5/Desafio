@@ -1,31 +1,60 @@
-<div class="container mt-4">
-  <h3 class="mb-4">Minhas Compras</h3>
+<div class="container my-5 compras-container">
 
-  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="fw-bold mb-0">Minhas Compras</h3>
+    <span class="text-muted small">
+      {{ compras.length }} compra(s)
+    </span>
+  </div>
 
-  <div *ngIf="compras.length === 0" class="alert alert-info">
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="compras.length === 0" class="alert alert-info text-center">
     Você ainda não realizou nenhuma compra.
   </div>
 
-  <div *ngFor="let compra of compras" class="card mb-4 shadow-sm border-0">
-    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center"
-      [ngClass]="compra.cancelada ? 'bg-danger text-white' : 'bg-primary text-white'">
-      <span>Compra {{ compra.id }}</span>
-      <span><strong>Total: R$ {{ compra.valorTotal | number:'1.2-2' }}</strong></span>
+  <div *ngFor="let compra of compras" class="card compra-card mb-4 border-0">
+
+    <div class="card-header d-flex justify-content-between align-items-center"
+         [ngClass]="compra.cancelada ? 'header-cancelada' : 'header-ativa'">
+
+      <div>
+        <span class="fw-semibold">Compra #{{ compra.id }}</span>
+        <div class="small opacity-75">
+          {{ compra.itens.length }} item(ns)
+        </div>
+      </div>
+
+      <div class="text-end">
+        <div class="fw-bold fs-5">
+          R$ {{ compra.valorTotal | number:'1.2-2' }}
+        </div>
+        <span *ngIf="!compra.cancelada" class="badge bg-success-subtle text-success">
+          Concluída
+        </span>
+      </div>
     </div>
 
     <ul class="list-group list-group-flush">
-      <li *ngFor="let item of compra.itens" class="list-group-item d-flex justify-content-between align-items-center">
+      <li *ngFor="let item of compra.itens"
+          class="list-group-item item-compra d-flex justify-content-between align-items-center">
+
         <div>
-          <strong>{{ item.nome }}</strong> x {{ item.quantidade }}
+          <div class="fw-medium">{{ item.nome }}</div>
+          <small class="text-muted">Qtd: {{ item.quantidade }}</small>
         </div>
-        <div>
+
+        <div class="fw-semibold">
           R$ {{ item.valor | number:'1.2-2' }}
         </div>
       </li>
     </ul>
-    <div class="card-footer text-end text-danger fw-bold" *ngIf="compra.cancelada">
+
+    <div *ngIf="compra.cancelada" class="card-footer footer-cancelada text-center">
       CANCELADA
     </div>
+
   </div>
 </div>

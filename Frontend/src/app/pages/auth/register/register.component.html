@@ -1,48 +1,107 @@
 <div class="d-flex justify-content-center align-items-center vh-100 bg-light">
-  <div class="card shadow p-4" style="width: 400px;">
+  <div class="card shadow p-4" style="width: 350px;">
     <h3 class="text-center mb-4">Criar Conta</h3>
 
     <div *ngIf="successMessage" class="alert alert-success text-center" role="alert">
       {{ successMessage }}
     </div>
-    <div *ngIf="errorMessage" [innerHTML]="errorMessage" class="alert alert-danger text-center" role="alert">
 
+    <div *ngIf="errorMessage" class="alert alert-danger text-center" role="alert">
+      {{ errorMessage }}
     </div>
 
     <form [formGroup]="form" (ngSubmit)="registrar()">
+
+      <!-- Email -->
       <div class="mb-3">
-        <po-email name="email" formControlName="email" p-label="Email"></po-email>
+        <label for="email" class="form-label">Email</label>
+        <input
+          id="email"
+          type="email"
+          class="form-control"
+          formControlName="email"
+          placeholder="Digite seu email"
+        />
 
-        <small class="text-danger ms-1" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
-          <span *ngIf="form.get('email')?.errors?.['required']">O campo Email é obrigatório.</span>
-          <span *ngIf="form.get('email')?.errors?.['email']">Formato de email inválido.</span>
-        </small>
+        <div
+          class="text-danger mt-1"
+          *ngIf="form.get('email')?.touched && form.get('email')?.invalid"
+        >
+          <small *ngIf="form.get('email')?.errors?.['required']">
+            O campo Email é obrigatório.
+          </small>
+          <small *ngIf="form.get('email')?.errors?.['email']">
+            Formato de email inválido.
+          </small>
+        </div>
       </div>
 
+      <!-- Senha -->
       <div class="mb-3">
-        <po-password name="password" formControlName="senha" p-label="Senha"></po-password>
+        <label for="senha" class="form-label">Senha</label>
+        <input
+          id="senha"
+          type="password"
+          class="form-control"
+          formControlName="senha"
+          placeholder="Digite sua senha"
+        />
 
-        <small class="text-danger ms-1" *ngIf="form.get('senha')?.touched && form.get('senha')?.invalid">
-          <span *ngIf="form.get('senha')?.errors?.['required']">A senha é obrigatória.</span>
-          <span *ngIf="form.get('senha')?.errors?.['minlength']">A senha deve ter no mínimo 6 caracteres.</span>
-          <span *ngIf="form.get('senha')?.errors?.['maxlength']">A senha deve ter no máximo 100 caracteres.</span>
-        </small>
+        <div
+          class="text-danger mt-1"
+          *ngIf="form.get('senha')?.touched && form.get('senha')?.invalid"
+        >
+          <small *ngIf="form.get('senha')?.errors?.['required']">
+            O campo Senha é obrigatório.
+          </small>
+          <small *ngIf="form.get('senha')?.errors?.['minlength']">
+            A senha deve ter no mínimo 6 caracteres.
+          </small>
+          <small *ngIf="form.get('senha')?.errors?.['maxlength']">
+            A senha deve ter no máximo 100 caracteres.
+          </small>
+        </div>
       </div>
 
+      <!-- Confirmar Senha -->
       <div class="mb-3">
-        <po-password name="password" formControlName="confirmarSenha" p-label="Confirmar Senha"></po-password>
+        <label for="confirmarSenha" class="form-label">Confirmar Senha</label>
+        <input
+          id="confirmarSenha"
+          type="password"
+          class="form-control"
+          formControlName="confirmarSenha"
+          placeholder="Confirme sua senha"
+        />
 
-        <small class="text-danger ms-1"
-          *ngIf="form.get('confirmarSenha')?.touched && (form.get('confirmarSenha')?.invalid || form.errors?.['senhasDiferentes'])">
-          <span *ngIf="form.get('confirmarSenha')?.errors?.['required']">A confirmação de senha é obrigatória.</span>
-          <span *ngIf="form.errors?.['senhasDiferentes']">As senhas não coincidem.</span>
-        </small>
+        <div
+          class="text-danger mt-1"
+          *ngIf="
+            form.get('confirmarSenha')?.touched &&
+            (form.get('confirmarSenha')?.invalid || form.errors?.['senhasDiferentes'])
+          "
+        >
+          <small *ngIf="form.get('confirmarSenha')?.errors?.['required']">
+            A confirmação de senha é obrigatória.
+          </small>
+          <small *ngIf="form.errors?.['senhasDiferentes']">
+            As senhas não coincidem.
+          </small>
+        </div>
       </div>
 
-      <div class="d-flex justify-content-center my-3">
-        <po-button p-label="Registrar" (p-click)="registrar()"> </po-button>
+      <!-- Botão -->
+      <div class="d-grid my-3">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="form.invalid"
+        >
+          Registrar
+        </button>
       </div>
 
+      <!-- Link -->
       <div class="text-center">
         <a routerLink="/login">Já possui conta? Entrar</a>
       </div>

@@ -1,54 +1,72 @@
-.btn-float {
-  position: fixed;
-  bottom: 25px;
-  right: 25px;
-  background: #0d6efd;
-  color: #fff;
-  padding: 12px 20px;
-  border-radius: 50px;
-  border: none;
-  font-size: 16px;
-  box-shadow: 0px 4px 8px rgba(0,0,0,.2);
-  cursor: pointer;
-  z-index: 9999;
+/* Escopo da vitrine */
+.vitrine-page {
 
-  &:hover {
-    background: #084298;
-  }
-}
-
-.carrinho-panel {
-  position: fixed;
-  top: 0;
-  right: -400px;
-  width: 350px;
-  height: 100vh;
-  background: white;
-  box-shadow: -4px 0 10px rgba(0,0,0,.2);
-  padding: 20px;
-  transition: 0.3s ease;
-  z-index: 9998;
-  overflow-y: auto;
-
-  &.aberto {
-    right: 0;
+  /* Reaproveita padrão geral */
+  .compras-container {
+    max-width: 1100px;
   }
 
-  .item {
-    padding: 10px 0;
-    border-bottom: 1px solid #ddd;
+  /* Card do produto */
+  .produto-card {
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 
-    .nome {
-      font-weight: bold;
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
+    }
+  }
+
+  /* Header do card */
+  .card-header {
+    padding: 0.9rem 1rem;
+    font-size: 1rem;
+  }
+
+  /* Infos */
+  .produto-info {
+    font-size: 0.95rem;
+  }
+
+  /* Botões */
+  .btn {
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 0.6rem;
+  }
+
+  /* Estados de estoque */
+  .text-success {
+    font-weight: 700;
+  }
+
+  .text-warning {
+    font-weight: 700;
+  }
+
+  .text-danger {
+    font-weight: 700;
+  }
+
+  /* Alert */
+  .alert {
+    border-radius: 12px;
+  }
+
+  /* Empty state */
+  .bi {
+    opacity: 0.7;
+  }
+
+  /* Responsivo */
+  @media (max-width: 576px) {
+    .card-header {
+      font-size: 0.95rem;
     }
 
-    .info {
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .subtotal {
-      margin-top: 5px;
+    .produto-info {
+      font-size: 0.9rem;
     }
   }
 }

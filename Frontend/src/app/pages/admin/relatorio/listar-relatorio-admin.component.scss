@@ -1,23 +1,113 @@
-.container {
-  max-width: 900px;
-}
-
-.card {
-  border-radius: 12px;
-}
-
-.table {
-  th, td {
-    vertical-align: middle;
+/* Escopo da tela (evita vazar estilo para outras páginas) */
+.relatorios-page {
+  /* Mesmo padrão das outras telas */
+  .compras-container {
+    max-width: 900px;
   }
-}
 
-.btn-primary {
-  background: linear-gradient(135deg, #4a90e2, #007bff);
-  border: none;
-  transition: all 0.3s;
-  
-  &:hover {
-    background: linear-gradient(135deg, #357ab8, #0056b3);
+  /* Card moderno */
+  .compra-card {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+    }
+  }
+
+  /* Header com gradiente (padrão) */
+  .header-ativa {
+    background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+    color: #fff;
+    border: 0;
+
+    .badge {
+      border-radius: 999px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      padding: 0.45rem 0.75rem;
+    }
+  }
+
+  /* Tipografia e espaçamentos */
+  .card-header {
+    padding: 1rem 1.25rem;
+  }
+
+  .card-body {
+    background: #fff;
+  }
+
+  /* Inputs com acabamento mais “app” */
+  .form-control {
+    border-radius: 10px;
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+    }
+  }
+
+  /* Botão com borda arredondada */
+  .btn {
+    border-radius: 10px;
+  }
+
+  /* Tabela */
+  .relatorios-table {
+    thead th {
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    td,
+    th {
+      padding: 1rem 1.25rem;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    /* Produto pode quebrar linha se for grande */
+    td:first-child {
+      white-space: normal;
+      min-width: 240px;
+    }
+
+    tbody tr {
+      transition: background-color 0.2s ease;
+    }
+
+    tbody tr:hover {
+      background-color: #f8f9fa;
+    }
+  }
+
+  /* Footer do card */
+  .card-footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  /* Alerts um pouco mais “polidos” */
+  .alert {
+    border-radius: 12px;
+  }
+
+  /* Ícone do empty state (caso use bootstrap-icons) */
+  .bi {
+    opacity: 0.75;
+  }
+
+  /* Responsivo: melhora a leitura no mobile */
+  @media (max-width: 576px) {
+    .card-header {
+      padding: 0.9rem 1rem;
+    }
+
+    .relatorios-table td,
+    .relatorios-table th {
+      padding: 0.85rem 1rem;
+    }
   }
 }

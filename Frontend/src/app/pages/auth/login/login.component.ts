@@ -31,7 +31,6 @@ export class LoginComponent {
   }
 
   async login() {
-    console.log(this.form.invalid);
     if (this.form.invalid){
       this.form.markAllAsTouched();
       return;

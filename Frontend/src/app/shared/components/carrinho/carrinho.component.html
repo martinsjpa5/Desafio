@@ -1,66 +1,105 @@
-<button *ngIf="!carrinhoAberto" class="btn-float" (click)="toggleCarrinho()">
-  🛒 Carrinho <strong>{{ (carrinho$ | async)?.length || 0 }}</strong>
+<!-- Botão flutuante -->
+<button *ngIf="!carrinhoAberto"
+        class="btn btn-primary cart-fab"
+        (click)="toggleCarrinho()">
+  <span class="me-2">🛒</span>
+  Carrinho
+  <span class="badge bg-light text-dark ms-2">
+    {{ (carrinho$ | async)?.length || 0 }}
+  </span>
 </button>
 
-<div *ngIf="compraSucesso" class="alert alert-success mt-2" role="alert">
-  Compra finalizada com sucesso! você pode verificar suas compras em Usuario/Compras
+<!-- Alerts -->
+<div *ngIf="compraSucesso" class="alert alert-success mt-3 text-center cart-alert" role="alert">
+  Compra finalizada com sucesso! Você pode verificar em Usuário/Compras.
 </div>
 
-<div *ngIf="errorMessage" [innerHTML]="errorMessage" class="alert alert-danger text-center">
-  {{ errorMessage }}
+<div *ngIf="errorMessage" [innerHTML]="errorMessage" class="alert alert-danger text-center cart-alert">
 </div>
 
-<div class="carrinho-panel" [class.aberto]="carrinhoAberto">
+<!-- Overlay -->
+<div class="cart-overlay" *ngIf="carrinhoAberto" (click)="toggleCarrinho()"></div>
 
-  <button class="btn-close-cart" (click)="toggleCarrinho()">✕</button>
-
-  <h3 class="titulo-carrinho">Seu Carrinho</h3>
-
-  <ng-container *ngIf="(carrinho$ | async) as carrinho">
-
-    <div class="carrinho-vazio" *ngIf="carrinho.length === 0">
-      <p>Seu carrinho está vazio.</p>
+<!-- Painel -->
+<div class="cart-app carrinho-panel" [class.aberto]="carrinhoAberto">
+  <div class="cart-header header-ativa d-flex justify-content-between align-items-center">
+    <div>
+      <div class="fw-semibold">Seu Carrinho</div>
+      <div class="small opacity-75">Revise os itens antes de finalizar.</div>
     </div>
 
-    <div class="lista-itens" *ngIf="carrinho.length > 0">
+    <button class="btn btn-light btn-sm cart-close" (click)="toggleCarrinho()">✕</button>
+  </div>
 
-      <div *ngFor="let item of carrinho" class="item-card">
+  <div class="cart-body p-3">
+    <ng-container *ngIf="(carrinho$ | async) as carrinho">
 
-        <div class="linha-superior">
-          <div class="nome">{{ item.produto.nome }}</div>
-          <button class="remover-btn" (click)="removerDoCarrinho(item.produto.id)">×</button>
-        </div>
+      <!-- Vazio -->
+      <div class="cart-empty text-center text-muted py-5" *ngIf="carrinho.length === 0">
+        <i class="bi bi-inbox fs-2 d-block mb-2"></i>
+        Seu carrinho está vazio.
+      </div>
 
-        <div class="linha-meio">
-          <div class="preco">R$ {{ item.produto.valor | number:'1.2-2' }}</div>
+      <!-- Itens -->
+      <div class="cart-items" *ngIf="carrinho.length > 0">
 
-          <div class="quantidade-box">
-            <input type="number" min="1" [max]="item.produto.quantidadeEstoque" [value]="item.quantidade"
-              (change)="atualizarQuantidade(item, $any($event.target).value)">
+        <div *ngFor="let item of carrinho" class="card compra-card cart-item border-0 mb-3">
+          <div class="card-body">
+
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <div class="fw-semibold item-name">{{ item.produto.nome }}</div>
+
+              <button class="btn btn-sm btn-outline-danger cart-remove"
+                      (click)="removerDoCarrinho(item.produto.id)">
+                <span class="me-1">✕</span> Remover
+              </button>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div class="text-muted">
+                Preço:
+                <span class="fw-semibold text-dark">
+                  R$ {{ item.produto.valor | number:'1.2-2' }}
+                </span>
+              </div>
+
+              <div class="qty-box">
+                <label class="form-label small text-muted mb-1">Qtd</label>
+                <input type="number"
+                       class="form-control form-control-sm"
+                       min="1"
+                       [max]="item.produto.quantidadeEstoque"
+                       [value]="item.quantidade"
+                       (change)="atualizarQuantidade(item, $any($event.target).value)">
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+              <span class="text-muted">Subtotal</span>
+              <span class="fw-bold">
+                R$ {{ (item.quantidade * item.produto.valor) | number:'1.2-2' }}
+              </span>
+            </div>
+
           </div>
-        </div>
-
-        <div class="linha-inferior">
-          Subtotal:
-          <strong>R$ {{ (item.quantidade * item.produto.valor) | number:'1.2-2' }}</strong>
         </div>
 
       </div>
 
-    </div>
+      <!-- Total -->
+      <div class="cart-total d-flex justify-content-between align-items-center mt-3">
+        <span class="fw-semibold">Total</span>
+        <span class="fw-bold fs-5">
+          R$ {{ (totalCarrinho$ | async)?.toFixed(2) }}
+        </span>
+      </div>
 
-    <div class="linha-total">
-      Total:
-      <span class="valor-total">
-        R$ {{ (totalCarrinho$ | async)?.toFixed(2) }}
-      </span>
-    </div>
+      <button class="btn btn-success w-100 mt-3 cart-checkout"
+              (click)="finalizarCompra()"
+              [disabled]="carrinho.length === 0">
+        Finalizar Compra
+      </button>
 
-    <button class="btn btn-success w-100 mt-3" (click)="finalizarCompra()"
-      [disabled]="(carrinho$ | async)?.length === 0">
-      Finalizar Compra
-    </button>
-
-  </ng-container>
-
+    </ng-container>
+  </div>
 </div>

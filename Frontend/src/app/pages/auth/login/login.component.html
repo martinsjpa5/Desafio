@@ -5,44 +5,74 @@
     <div *ngIf="successMessage" class="alert alert-success text-center" role="alert">
       {{ successMessage }}
     </div>
-    <div *ngIf="errorMessage" [innerHTML]="errorMessage" class="alert alert-danger text-center" role="alert">
+
+    <div *ngIf="errorMessage" class="alert alert-danger text-center" role="alert">
       {{ errorMessage }}
     </div>
 
-    <form [formGroup]="form">
+    <form [formGroup]="form" (ngSubmit)="login()">
 
+      <!-- Email -->
       <div class="mb-3">
-        <po-email name="email" formControlName="email" p-label="Email">
-        </po-email>
+        <label for="email" class="form-label">Email</label>
+        <input
+          id="email"
+          type="email"
+          class="form-control"
+          formControlName="email"
+          placeholder="Digite seu email"
+        />
 
-        <small class="text-danger ms-1" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
-          <span *ngIf="form.get('email')?.errors?.['required']">
+        <div
+          class="text-danger mt-1"
+          *ngIf="form.get('email')?.touched && form.get('email')?.invalid"
+        >
+          <small *ngIf="form.get('email')?.errors?.['required']">
             O campo Email é obrigatório.
-          </span>
-          <span *ngIf="form.get('email')?.errors?.['email']">
+          </small>
+          <small *ngIf="form.get('email')?.errors?.['email']">
             Formato de email inválido.
-          </span>
-        </small>
+          </small>
+        </div>
       </div>
 
+      <!-- Senha -->
       <div class="mb-3">
-        <po-password name="password" formControlName="senha" p-label="Senha">
-        </po-password>
+        <label for="senha" class="form-label">Senha</label>
+        <input
+          id="senha"
+          type="password"
+          class="form-control"
+          formControlName="senha"
+          placeholder="Digite sua senha"
+        />
 
-        <small class="text-danger ms-1" *ngIf="form.get('senha')?.touched && form.get('senha')?.invalid">
-          <span *ngIf="form.get('senha')?.errors?.['required']">
+        <div
+          class="text-danger mt-1"
+          *ngIf="form.get('senha')?.touched && form.get('senha')?.invalid"
+        >
+          <small *ngIf="form.get('senha')?.errors?.['required']">
             O campo Senha é obrigatório.
-          </span>
-        </small>
+          </small>
+        </div>
       </div>
 
-      <div class="d-flex justify-content-center my-3">
-        <po-button p-label="Entrar" (p-click)="login()"> </po-button>
+      <!-- Botão -->
+      <div class="d-grid my-3">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="form.invalid"
+        >
+          Entrar
+        </button>
       </div>
 
+      <!-- Link -->
       <div class="text-center">
         <a routerLink="/register">Criar conta</a>
       </div>
+
     </form>
   </div>
 </div>
