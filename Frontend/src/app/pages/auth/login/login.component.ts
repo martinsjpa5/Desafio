@@ -51,7 +51,7 @@ export class LoginComponent {
         this.router.navigate(['/vitrine']);
       }, 3501);
 
-    } catch (error: any) {
+    } catch (error) {
       this.toastService.error(ApiErrorHelper.getApiErrorMessage(error));
 
     } finally {

@@ -27,15 +27,6 @@ export class CarrinhoComponent {
         private compraService: CompraService, private toastService: ToastService) {
         this.carrinho$ = this.carrinhoService.itens$;
         this.obterCarrinho();
-        this.onAbrirCarrinho();
-    }
-
-    async onAbrirCarrinho(){
-        this.carrinhoService.open$
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => {
-        this.carrinhoAberto = true;
-      });
     }
 
     async obterCarrinho() {

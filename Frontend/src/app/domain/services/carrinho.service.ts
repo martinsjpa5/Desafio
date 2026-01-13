@@ -16,10 +16,6 @@ export class CarrinhoService {
   public itens$ = this._itens.asObservable();
   public compraEfetuada$ = this._compraEfetuada.asObservable();
 
-  private openSubject = new Subject<void>();
-  
-  public open$ = this.openSubject.asObservable();
-
   private ultimoSnapshot: string = '';
 
   private apiUrl = `${environment.apiUrl}/Carrinho`;
@@ -84,7 +80,6 @@ export class CarrinhoService {
     }
 
     this.atualizar(itens);
-    this.openSubject.next();
   }
 
   definirQuantidade(produtoId: number, quantidade: number) {
