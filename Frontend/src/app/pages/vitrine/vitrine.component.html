@@ -1,16 +1,10 @@
 <div class="container my-5 compras-container vitrine-page">
 
-  <!-- Header -->
   <div class="text-center mb-5">
     <h3 class="fw-bold mb-1">Vitrine</h3>
     <p class="text-muted mb-0">Escolha seus produtos disponíveis</p>
   </div>
 
-  <!-- Error -->
-  <div *ngIf="errorMessage"
-       class="alert alert-danger text-center"
-       [innerHTML]="errorMessage">
-  </div>
 
   <!-- Grid de produtos -->
   <div class="row g-4">
@@ -71,5 +65,4 @@
   </div>
 </div>
 
-<!-- Carrinho permanece -->
 <app-carrinho></app-carrinho>

@@ -1,14 +1,5 @@
 <div class="container my-5 compras-container relatorios-page">
 
-  <!-- Alerts -->
-  <div *ngIf="successMessage" class="alert alert-success text-center" role="alert">
-    {{ successMessage }}
-  </div>
-
-  <div *ngIf="errorMessage" class="alert alert-danger text-center" role="alert"
-       [innerHTML]="errorMessage">
-  </div>
-
   <!-- Card Filtro -->
   <form [formGroup]="form" class="card compra-card border-0 mb-4">
     <div class="card-header header-ativa d-flex justify-content-between align-items-center">

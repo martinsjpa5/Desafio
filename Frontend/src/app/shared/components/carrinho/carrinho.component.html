@@ -9,18 +9,9 @@
   </span>
 </button>
 
-<!-- Alerts -->
-<div *ngIf="compraSucesso" class="alert alert-success mt-3 text-center cart-alert" role="alert">
-  Compra finalizada com sucesso! Você pode verificar em Usuário/Compras.
-</div>
 
-<div *ngIf="errorMessage" [innerHTML]="errorMessage" class="alert alert-danger text-center cart-alert">
-</div>
-
-<!-- Overlay -->
 <div class="cart-overlay" *ngIf="carrinhoAberto" (click)="toggleCarrinho()"></div>
 
-<!-- Painel -->
 <div class="cart-app carrinho-panel" [class.aberto]="carrinhoAberto">
   <div class="cart-header header-ativa d-flex justify-content-between align-items-center">
     <div>
@@ -34,13 +25,11 @@
   <div class="cart-body p-3">
     <ng-container *ngIf="(carrinho$ | async) as carrinho">
 
-      <!-- Vazio -->
       <div class="cart-empty text-center text-muted py-5" *ngIf="carrinho.length === 0">
         <i class="bi bi-inbox fs-2 d-block mb-2"></i>
         Seu carrinho está vazio.
       </div>
 
-      <!-- Itens -->
       <div class="cart-items" *ngIf="carrinho.length > 0">
 
         <div *ngFor="let item of carrinho" class="card compra-card cart-item border-0 mb-3">
@@ -86,7 +75,6 @@
 
       </div>
 
-      <!-- Total -->
       <div class="cart-total d-flex justify-content-between align-items-center mt-3">
         <span class="fw-semibold">Total</span>
         <span class="fw-bold fs-5">

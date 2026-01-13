@@ -5,6 +5,8 @@ import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProdutoListarResponse } from '../../../domain/models/produto.model';
 import { ProdutoService } from '../../../domain/services/produto.service';
 import { LoadingService } from '../../../core/services/loading.service';
+import { ToastService } from '../../../core/services/toast.service';
+import { ApiErrorHelper } from '../../../core/helpers/api-error.helper';
 
 @Component({
   selector: 'app-listar-produtos-admin',
@@ -16,7 +18,6 @@ import { LoadingService } from '../../../core/services/loading.service';
 export class ListarProdutosAdminComponent implements OnInit {
 
   produtos: ProdutoListarResponse[] = [];
-  errorMessage = '';
   produtoForm: FormGroup;
   modalTitle = '';
   modalRef: any;
@@ -25,7 +26,8 @@ export class ListarProdutosAdminComponent implements OnInit {
     private produtoService: ProdutoService,
     private modalService: NgbModal,
     private fb: FormBuilder,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private toastService: ToastService
   ) {
     this.produtoForm = this.fb.group({
       id: [0],
@@ -40,12 +42,11 @@ export class ListarProdutosAdminComponent implements OnInit {
   }
 
   async buscarProdutos() {
-    this.errorMessage = '';
     this.loadingService.show();
     try {
       this.produtos = await this.produtoService.listar();
     } catch (error) {
-      this.errorMessage = 'Erro ao carregar produtos.';
+      this.toastService.error(ApiErrorHelper.getApiErrorMessage(error));
     }
     finally{
       this.loadingService.hide();
@@ -80,12 +81,7 @@ export class ListarProdutosAdminComponent implements OnInit {
       await this.buscarProdutos();
       this.modalRef.dismiss();
     } catch (error: any) {
-      if (error?.error?.erros) {
-        this.errorMessage = error.error.erros.join('<br>');
-      }
-      else {
-        this.errorMessage = 'Erro ao salvar produto.';
-      }
+      this.toastService.error(ApiErrorHelper.getApiErrorMessage(error));
     }
     finally{
       this.loadingService.hide();
@@ -99,12 +95,7 @@ export class ListarProdutosAdminComponent implements OnInit {
       await this.produtoService.deletar(produto.id);
       this.buscarProdutos();
     } catch (error: any) {
-      if (error?.error?.erros) {
-        this.errorMessage = error.error.erros.join('<br>');
-      }
-      else {
-        this.errorMessage = 'Erro ao excluir produto.';
-      }
+      this.toastService.error(ApiErrorHelper.getApiErrorMessage(error));
     }
   }
 }

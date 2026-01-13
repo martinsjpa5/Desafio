@@ -3,6 +3,8 @@ import { CompraListarResponse } from '../../../domain/models/compra-listar.model
 import { CompraService } from '../../../domain/services/compra.service';
 import { CommonModule } from '@angular/common';
 import { LoadingService } from '../../../core/services/loading.service';
+import { ToastService } from '../../../core/services/toast.service';
+import { ApiErrorHelper } from '../../../core/helpers/api-error.helper';
 
 @Component({
     standalone: true,
@@ -13,9 +15,8 @@ import { LoadingService } from '../../../core/services/loading.service';
 })
 export class ListarComprasUsuarioComponent implements OnInit {
     compras: CompraListarResponse[] = [];
-    errorMessage = '';
 
-    constructor(private compraService: CompraService, private loadingService: LoadingService) { }
+    constructor(private compraService: CompraService, private loadingService: LoadingService, private toastService: ToastService) { }
 
     ngOnInit() {
         this.buscarCompras();
@@ -23,19 +24,13 @@ export class ListarComprasUsuarioComponent implements OnInit {
 
     async buscarCompras() {
         this.loadingService.show();
-        this.errorMessage = '';
         try {
             let response = await this.compraService.listarComprasUsuario();
             this.compras = response.data;
 
         }
         catch (error: any) {
-            if (error?.error?.erros) {
-                this.errorMessage = error.error.erros.join('<br>');
-            }
-            else {
-                this.errorMessage = 'Erro ao carregar compras.';
-            }
+            this.toastService.error(ApiErrorHelper.getApiErrorMessage(error));
         }
         finally {
             this.loadingService.hide();

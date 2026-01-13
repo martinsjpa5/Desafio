@@ -1,18 +1,8 @@
 <div class="d-flex justify-content-center align-items-center vh-100 bg-light">
   <div class="card shadow p-4" style="width: 350px;">
     <h3 class="text-center mb-4">Criar Conta</h3>
-
-    <div *ngIf="successMessage" class="alert alert-success text-center" role="alert">
-      {{ successMessage }}
-    </div>
-
-    <div *ngIf="errorMessage" class="alert alert-danger text-center" role="alert">
-      {{ errorMessage }}
-    </div>
-
     <form [formGroup]="form" (ngSubmit)="registrar()">
 
-      <!-- Email -->
       <div class="mb-3">
         <label for="email" class="form-label">Email</label>
         <input
@@ -36,7 +26,6 @@
         </div>
       </div>
 
-      <!-- Senha -->
       <div class="mb-3">
         <label for="senha" class="form-label">Senha</label>
         <input
@@ -63,7 +52,6 @@
         </div>
       </div>
 
-      <!-- Confirmar Senha -->
       <div class="mb-3">
         <label for="confirmarSenha" class="form-label">Confirmar Senha</label>
         <input
@@ -90,7 +78,6 @@
         </div>
       </div>
 
-      <!-- Botão -->
       <div class="d-grid my-3">
         <button
           type="submit"
@@ -101,7 +88,6 @@
         </button>
       </div>
 
-      <!-- Link -->
       <div class="text-center">
         <a routerLink="/login">Já possui conta? Entrar</a>
       </div>

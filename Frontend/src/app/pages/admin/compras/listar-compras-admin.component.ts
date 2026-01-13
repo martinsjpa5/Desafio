@@ -4,6 +4,8 @@ import { NgFor, NgIf } from '@angular/common';
 import { CompraService } from '../../../domain/services/compra.service';
 import { CompraListarResponse } from '../../../domain/models/compra-listar.model';
 import { LoadingService } from '../../../core/services/loading.service';
+import { ToastService } from '../../../core/services/toast.service';
+import { ApiErrorHelper } from '../../../core/helpers/api-error.helper';
 
 @Component({
   selector: 'app-listar-compras',
@@ -16,9 +18,8 @@ export class ListarComprasAdminComponent implements OnInit {
 
   compras: CompraListarResponse[] = [];
   carregando = false;
-  errorMessage = '';
 
-  constructor(private compraService: CompraService, private loadingService: LoadingService) { }
+  constructor(private compraService: CompraService, private loadingService: LoadingService, private toastService: ToastService) { }
 
   ngOnInit() {
     this.buscarCompras();
@@ -26,18 +27,12 @@ export class ListarComprasAdminComponent implements OnInit {
 
   async buscarCompras() {
     this.loadingService.show();
-    this.errorMessage = '';
 
     try {
       let response = await this.compraService.listarComprasAdmin();
       this.compras = response.data;
     } catch (error: any) {
-      if (error?.error?.erros) {
-        this.errorMessage = error.error.erros.join('<br>');
-      }
-      else {
-        this.errorMessage = 'Erro ao carregar compras.';
-      }
+      this.toastService.error(ApiErrorHelper.getApiErrorMessage(error));
     } finally {
       this.loadingService.hide();
     }
@@ -47,17 +42,12 @@ export class ListarComprasAdminComponent implements OnInit {
     if (!confirm('Deseja realmente cancelar esta compra?')) return;
     this.loadingService.show();
     try {
-      const resposta = await this.compraService.cancelarCompra(compraId);
+      await this.compraService.cancelarCompra(compraId);
+      this.toastService.success("Compra Cancelada com sucesso!")
       this.buscarCompras();
     }
     catch (error: any) {
-      if (error?.error?.erros) {
-        this.errorMessage = error.error.erros.join('<br>');
-      }
-      else{
-        this.errorMessage = "erro ao cancelar compra";
-      }
-      
+     this.toastService.error(ApiErrorHelper.getApiErrorMessage(error));
     }
     finally {
       this.loadingService.hide();

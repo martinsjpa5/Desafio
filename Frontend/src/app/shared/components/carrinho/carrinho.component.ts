@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CarrinhoService } from '../../../domain/services/carrinho.service';
 import { map } from 'rxjs';
 import { LoadingService } from '../../../core/services/loading.service';
 import { CompraService } from '../../../domain/services/compra.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ToastService } from '../../../core/services/toast.service';
+import { ApiErrorHelper } from '../../../core/helpers/api-error.helper';
 
 @Component({
     selector: 'app-carrinho',
@@ -16,14 +19,23 @@ export class CarrinhoComponent {
 
     carrinho$;
     carrinhoAberto = false;
-    compraSucesso = false;
-    errorMessage = '';
+
+    private destroyRef = inject(DestroyRef);
 
     constructor(private carrinhoService: CarrinhoService,
         private loadingService: LoadingService,
-        private compraService: CompraService) {
+        private compraService: CompraService, private toastService: ToastService) {
         this.carrinho$ = this.carrinhoService.itens$;
         this.obterCarrinho();
+        this.onAbrirCarrinho();
+    }
+
+    async onAbrirCarrinho(){
+        this.carrinhoService.open$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.carrinhoAberto = true;
+      });
     }
 
     async obterCarrinho() {
@@ -32,12 +44,7 @@ export class CarrinhoComponent {
             await this.carrinhoService.Obter();
 
         } catch (error: any) {
-            if (error?.error?.erros) {
-                this.errorMessage = error.error.erros.join('<br>');
-            }
-            else {
-                this.errorMessage = "Erro ao carregar o carrinho";
-            }
+            this.toastService.error(ApiErrorHelper.getApiErrorMessage(error));
         } finally {
             this.loadingService.hide();
         }
@@ -56,20 +63,10 @@ export class CarrinhoComponent {
 
             await this.compraService.efetuar(request);
             this.carrinhoService.compraEfetuadaComSucesso();
-            this.errorMessage = '';
-            this.compraSucesso = true;
-            setTimeout(() => {
-                this.compraSucesso = false;
-            }, 3000);
-
+            this.toastService.success("Compra finalizada com sucesso! Você pode verificar em Usuário/Compras.");
 
         } catch (error: any) {
-            if (error?.error?.erros) {
-                this.errorMessage = error.error.erros.join('<br>');
-            }
-            else {
-                this.errorMessage = 'Erro inesperado ao finalizar a compra.';
-            }
+            this.toastService.error(ApiErrorHelper.getApiErrorMessage(error));
         } finally {
             this.loadingService.hide();
         }

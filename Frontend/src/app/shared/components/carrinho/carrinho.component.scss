@@ -1,4 +1,4 @@
-/* Botão flutuante (FAB) */
+
 .cart-fab {
   position: fixed;
   right: 18px;
@@ -18,12 +18,11 @@
   }
 }
 
-/* Alerts */
 .cart-alert {
   border-radius: 12px;
 }
 
-/* Overlay */
+
 .cart-overlay {
   position: fixed;
   inset: 0;
@@ -31,7 +30,7 @@
   z-index: 1040;
 }
 
-/* Painel lateral */
+
 .carrinho-panel {
   position: fixed;
   top: 0;
@@ -54,27 +53,23 @@
   }
 }
 
-/* Header no mesmo padrão (gradiente azul) */
 .cart-header.header-ativa {
   background: linear-gradient(135deg, #1e40af, #1d4ed8);
   color: #fff;
   padding: 1rem 1.25rem;
 }
 
-/* Botão fechar */
 .cart-close {
   border-radius: 10px;
   font-weight: 800;
   padding: 0.35rem 0.6rem;
 }
 
-/* Corpo */
 .cart-body {
   overflow: auto;
   flex: 1;
 }
 
-/* Reaproveita padrão de cards “app” */
 .compra-card {
   border-radius: 12px;
   overflow: hidden;
@@ -87,7 +82,6 @@
   }
 }
 
-/* Item do carrinho */
 .cart-item {
   .item-name {
     max-width: 250px;
@@ -100,7 +94,6 @@
   }
 }
 
-/* Quantidade */
 .qty-box {
   width: 90px;
 
@@ -113,7 +106,6 @@
   }
 }
 
-/* Total */
 .cart-total {
   border-radius: 12px;
   padding: 0.9rem 1rem;
@@ -121,7 +113,6 @@
   border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
-/* Botão checkout */
 .cart-checkout {
   border-radius: 12px;
   font-weight: 800;
@@ -135,12 +126,10 @@
   }
 }
 
-/* Empty */
 .cart-empty .bi {
   opacity: 0.7;
 }
 
-/* Mobile */
 @media (max-width: 576px) {
   .cart-fab {
     right: 14px;

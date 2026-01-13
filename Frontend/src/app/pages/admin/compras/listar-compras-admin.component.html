@@ -8,10 +8,6 @@
     </span>
   </div>
 
-  <!-- ERROR -->
-  <div *ngIf="errorMessage" class="alert alert-danger">
-    {{ errorMessage }}
-  </div>
 
   <!-- EMPTY -->
   <div *ngIf="!carregando && compras.length === 0" class="alert alert-info text-center">

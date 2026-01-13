@@ -7,6 +7,8 @@ import { CarrinhoItem } from '../../domain/models/carrinho.model';
 import { CarrinhoComponent } from '../../shared/components/carrinho/carrinho.component';
 import { CarrinhoService } from '../../domain/services/carrinho.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ToastService } from '../../core/services/toast.service';
+import { ApiErrorHelper } from '../../core/helpers/api-error.helper';
 
 @Component({
     selector: 'app-vitrine',
@@ -18,14 +20,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class VitrineComponent implements OnInit {
 
     produtos: ProdutoListarResponse[] = [];
-    errorMessage = '';
     carrinho: CarrinhoItem[] = [];
     private destroyRef = inject(DestroyRef);
 
     constructor(
         private produtoService: ProdutoService,
         private loading: LoadingService,
-        private carrinhoService: CarrinhoService
+        private carrinhoService: CarrinhoService,
+        private toastService: ToastService
     ) { }
 
     ngOnInit(): void {
@@ -42,18 +44,12 @@ export class VitrineComponent implements OnInit {
     }
 
     async buscarProdutos() {
-        this.errorMessage = '';
         this.loading.show();
 
         try {
             this.produtos = await this.produtoService.listar();
         } catch (error: any) {
-            if (error?.error?.erros) {
-                this.errorMessage = error.error.erros.join('<br>');
-            }
-            else
-                this.errorMessage = 'Erro ao carregar produtos.';
-            console.error(error);
+            this.toastService.error(ApiErrorHelper.getApiErrorMessage(error));
         } finally {
             this.loading.hide();
         }

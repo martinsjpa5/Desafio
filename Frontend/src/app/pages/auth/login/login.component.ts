@@ -4,25 +4,25 @@ import { AuthService } from '../../../core/services/auth.service';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { LoadingService } from '../../../core/services/loading.service';
-import { PoButtonModule, PoFieldModule } from '@po-ui/ng-components';
+import { ToastService } from '../../../core/services/toast.service';
+import { ApiErrorHelper } from '../../../core/helpers/api-error.helper';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, PoFieldModule, PoButtonModule  ],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './login.component.html'
 })
 export class LoginComponent {
 
   form: FormGroup;
-  successMessage = '';
-  errorMessage = '';
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private toastService: ToastService
   ) {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -31,14 +31,12 @@ export class LoginComponent {
   }
 
   async login() {
-    if (this.form.invalid){
+    if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
 
     this.loadingService.show();
-    this.errorMessage = '';
-    this.successMessage = '';
 
     try {
       await this.authService.login(
@@ -47,20 +45,14 @@ export class LoginComponent {
       );
 
       this.authService.saveUserEmail(this.form.value.email);
-
-      this.successMessage = 'Login efetuado com sucesso! Você será redirecionado...';
+      this.toastService.success('Login efetuado com sucesso! Você será redirecionado...');
 
       setTimeout(() => {
         this.router.navigate(['/vitrine']);
-      }, 2500);
+      }, 3501);
 
     } catch (error: any) {
-      if (error?.error?.erros) {
-        this.errorMessage = error.error.erros.join('<br>');
-      }
-      else {
-        this.errorMessage = error?.error?.message || 'Falha ao efetuar login. Verifique seus dados.';
-      }
+      this.toastService.error(ApiErrorHelper.getApiErrorMessage(error));
 
     } finally {
       this.loadingService.hide();

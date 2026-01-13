@@ -5,10 +5,18 @@ import { TopSideBarComponent } from './core/layouts/topsider-bar.component';
 export const routes: Routes = [
 
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', loadChildren: () => import('./pages/auth/login/login.routes').then(m => m.LOGIN_ROUTES) },
-  { path: 'register', loadChildren: () => import('./pages/auth/register/register.routes').then(m => m.REGISTER_ROUTES) },
-
-
+  {
+    path: 'login',
+    loadComponent: () =>
+      import('./pages/auth/login/login.component')
+        .then(m => m.LoginComponent)
+  },
+  {
+    path: 'register',
+    loadComponent: () =>
+      import('./pages/auth/register/register.component')
+        .then(m => m.RegisterComponent)
+  },
   {
     path: '',
     component: TopSideBarComponent,

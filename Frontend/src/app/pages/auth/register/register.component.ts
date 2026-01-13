@@ -3,25 +3,26 @@ import { ReactiveFormsModule, Validators, FormGroup, FormBuilder, AbstractContro
 import { AuthService } from '../../../core/services/auth.service';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { PoButtonModule, PoFieldModule } from '@po-ui/ng-components';
+import { ToastService } from '../../../core/services/toast.service';
+import { ApiErrorHelper } from '../../../core/helpers/api-error.helper';
+import { LoadingService } from '../../../core/services/loading.service';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, PoFieldModule, PoButtonModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './register.component.html'
 })
 export class RegisterComponent {
 
   form: FormGroup;
-  loading = false;
-  successMessage = '';
-  errorMessage = '';
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private toastService: ToastService,
+    private loadingService: LoadingService
   ) {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -39,31 +40,25 @@ export class RegisterComponent {
   }
 
   async registrar() {
-    if (this.form.invalid || this.loading){
+    if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
-    } 
+    }
 
-    this.loading = true;
-    this.errorMessage = '';
-    this.successMessage = '';
+    this.loadingService.show();
 
     try {
       await this.authService.register(this.form.value);
-      this.successMessage = 'Registro efetuado com sucesso! Você será redirecionado...';
+      this.toastService.success("'Registro efetuado com sucesso! Você será redirecionado...'");
 
       setTimeout(() => {
-        this.router.navigate(['/login']); 
-      }, 2500);
+        this.router.navigate(['/login']);
+      }, 3001);
 
     } catch (error: any) {
-      if (error?.error?.erros) {
-      this.errorMessage = error.error.erros.join('<br>');
-    } else {
-      this.errorMessage = error?.error?.message || 'Falha ao registrar. Verifique seus dados.';
-    }
+      this.toastService.error(ApiErrorHelper.getApiErrorMessage(error));
     } finally {
-      this.loading = false;
+      this.loadingService.hide();
     }
   }
 }
