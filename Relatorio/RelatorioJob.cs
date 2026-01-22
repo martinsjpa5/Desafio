@@ -17,6 +17,7 @@ namespace Relatorio
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
+
             _relatorioQueue.StartConsumers(1, async (msg) =>
             {
                 using var scope = _scopeFactory.CreateScope();

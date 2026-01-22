@@ -21,16 +21,13 @@ export class CarrinhoService {
   private apiUrl = `${environment.apiUrl}/Carrinho`;
 
   constructor(private http: HttpClient) {
-    interval(10000)
+    interval(4500)
     .pipe(takeUntilDestroyed(inject(DestroyRef)))
     .subscribe(() => this.autoSalvar());
    }
 
   private autoSalvar() {
     const itens = this.itens;
-
-
-    if (itens.length === 0) return;
 
     const snapshotAtual = JSON.stringify(itens);
 
