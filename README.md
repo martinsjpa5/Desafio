@@ -24,7 +24,7 @@ Abra o navegador e acesse:
 
 Existe um usuário **Gerente** já criado:
 
-- **Email:** admin@gmail.com  
+- **Email:** admin@admin.com  
 - **Senha:** Desafio2025!
 
 ---
