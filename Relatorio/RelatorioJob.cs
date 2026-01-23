@@ -1,6 +1,5 @@
 using Application.Interfaces;
 using Domain.Interfaces.Queues;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Relatorio
 {

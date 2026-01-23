@@ -119,11 +119,10 @@ using (var scope = app.Services.CreateScope())
     await IdentitySeed.SeedAsync(services);
 }
 
-if (true)
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
 
 app.UseMiddleware<ExceptionMiddleware>();
 
